@@ -5,6 +5,7 @@ import { v2 as cloudinary } from 'cloudinary'
 import userModel from '../models/userModel.js'
 import doctorModel from '../models/doctorModel.js'
 import appointmentModel from '../models/appointmentModel.js'
+import mongoose  from 'mongoose'
 
 // API to register user
 const registerUser = async (req, res) => {
@@ -32,9 +33,10 @@ const registerUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt)
 
     const userData = {
+
       name, email, password: hashedPassword
     }
-
+   
     const newUser = new userModel(userData)
     const user = await newUser.save()
 
@@ -50,7 +52,7 @@ const registerUser = async (req, res) => {
 
 // API for user login
 const loginUser = async (req, res) => {
-
+console.log(req)
   try {
 
     const { email, password } = req.body

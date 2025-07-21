@@ -1,16 +1,20 @@
 import validator from "validator"
 import bcrypt from 'bcrypt'
-import { v2 as cloudinary } from 'cloudinary'
 import doctorModel from "../models/doctorModel.js"
 import jwt from 'jsonwebtoken'
 import appointmentModel from "../models/appointmentModel.js"
 import userModel from "../models/userModel.js"
-
+import cloudinary from "cloudinary"
 // API for adding doctor
 const addDoctor = async (req, res) => {
-
+  cloudinary.v2.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+  });
+ 
   try {
-
+     console.log(req.body)
     const { name, email, password, speciality, degree, experience, about, fees, address } = req.body
     const imageFile = req.file
 
@@ -34,9 +38,14 @@ const addDoctor = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt)
 
     // upload image to cloudinary
-    const imageUpload = await cloudinary.uploader.upload(imageFile.path, { resource_type: 'image' })
-    const imageUrl = imageUpload.secure_url
+    console.log("uploading the image")
 
+if (!imageFile || !imageFile.path) {
+  return res.json({ success: false, message: "No image file provided" });
+}
+const result = await cloudinary.v2.uploader.upload(req.file.path, { folder: "doctors" });
+    // console.log("image upload",)
+    const imageUrl = result.secure_url
     const doctorData = {
       name, email, image: imageUrl, password: hashedPassword, speciality,
       degree, experience, about, fees, address: JSON.parse(address), date: Date.now()
@@ -59,7 +68,7 @@ const loginAdmin = async (req, res) => {
   try {
 
     const { email, password } = req.body
-
+   console.log(email,password)
     if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
       const token = jwt.sign(email + password, process.env.JWT_SECRET)
       res.json({ success: true, token })
@@ -92,6 +101,7 @@ const allDoctors = async (req, res) => {
 const appointmentsAdmin = async (req, res) => {
 
   try {
+    console.log("get the all appointments",req)
 
     const appointments = await appointmentModel.find({})
     res.json({ success: true, appointments })

@@ -1,6 +1,6 @@
 import React from 'react'
 import { assets } from '../assets/assets_frontend/assets'
-
+import companylogo from '../assets/assets_frontend/Black-600x137.png'
 const Footer = () => {
   return (
     <div className='md:mx-10'>
@@ -8,7 +8,7 @@ const Footer = () => {
 
         {/* ---------- Left Section ---------- */}
         <div>
-          <img className='mb-5 w-40' src={assets.logo} alt="" />
+          <img className='mb-5 w-40' src={companylogo} alt="" />
           <p className='w-full md:w-2/3 text-gray-600 leading-6'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
         </div>
 
@@ -37,7 +37,7 @@ const Footer = () => {
       {/* ---------- Copyright Text ---------- */}
       <div>
         <hr />
-        <p className='py-5 text-sm text-center'>Copyright © 2024 - All Right Reserved.</p>
+        <p className='py-5 text-sm text-center'>powered by CodeOn © 2025 - All Right Reserved.</p>
       </div>
 
     </div>

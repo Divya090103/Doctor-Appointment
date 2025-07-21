@@ -11,7 +11,7 @@ const AdminContextProvider = (props) => {
   const [appointments, setAppointments] = useState([])
   const [dashData, setDashData] = useState(false)
 
-  const backendUrl = import.meta.env.VITE_BACKEND_URL
+  const backendUrl = 'https://doctor-appointment-backend-p1a8.onrender.com'
 
   const getAllDoctors = async () => {
 
@@ -51,12 +51,12 @@ const AdminContextProvider = (props) => {
   const getAllAppointments = async () => {
 
     try {
-
-      const { data } = await axios.get(backendUrl, '/api/admin/appointments', { headers: { aToken } })
-
+         console.log(aToken)
+         console.log("get all the appointments")
+      const { data } = await axios.get(backendUrl+'/api/admin/appointments', { headers: { aToken } })
       if (data.success) {
         setAppointments(data.appointments)
-        console.log(data.appointments)
+        console.log("get the all appointments",data.appointments)
       } else {
         toast.error(data.message)
       }

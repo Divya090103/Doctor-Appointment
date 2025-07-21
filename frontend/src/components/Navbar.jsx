@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { assets } from '../assets/assets_frontend/assets'
 import { AppContext } from '../context/AppContext';
-
+import companylogo from '../assets/assets_frontend/Black-600x137.png'
 const Navbar = () => {
 
   const navigate = useNavigate();
@@ -16,7 +16,9 @@ const Navbar = () => {
 
   return (
     <div className='flex items-center justify-between text-sm py-4 mb-5 border-b border-b-gray-400'>
-      <img onClick={() => navigate('/')} className='w-44 cursor-pointer' src={assets.logo} alt="" />
+      <img onClick={() => navigate('/')} className='h-8 w-30 cursor-pointer' src={companylogo} alt="" />
+     
+
       <ul className='hidden md:flex items-start gap-5 font-medium'>
         <NavLink to='/'>
           <li className='py-1'>HOME</li>
